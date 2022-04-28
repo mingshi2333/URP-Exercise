@@ -100,8 +100,9 @@ Shader "URP/URPALL"
 				float3 BaseColor = SAMPLE_TEXTURE2D(_BaseColorTex,sampler_BaseColorTex,i.uv);
 				float Metallic = MetalandGloss.b;
 
-				float gloss = MetalandGloss.g-0.13;
-				// gloss = pow(gloss,0.45);
+				float gloss = MetalandGloss.g;
+				gloss = MetalandGloss.g;
+				
 				float3 normalTS = UnpackNormal(SAMPLE_TEXTURE2D(_NormalTex, sampler_NormalTex, i.uv));
 				normalTS.z = pow(1-pow(normalTS.x,2)-pow(normalTS.y,2),0.5);
 				float3 Emission = SAMPLE_TEXTURE2D(_EmissionTex,sampler_EmissionTex,i.uv);
@@ -118,6 +119,7 @@ Shader "URP/URPALL"
 				//float perceptualRoughness = 1.0-_Smoothness;//也就是线性值，给美术调的
 				float perceptualRoughness = gloss;
 				float roughness = perceptualRoughness*perceptualRoughness;//寒霜做法，因为其实当粗糙度很大的时候，调值变化没有那么明显
+				roughness = lerp(0.002,1,roughness);
 				//float Metallic = _Metallic;
 				float3 F0 = float3(0.04,0.04,0.04);
 				 //F0 = lerp(F0,_Tint.xyz,Metallic);
@@ -125,7 +127,7 @@ Shader "URP/URPALL"
 
 				float D = DistributionGGX(NoH,roughness);
 				float3 F = F_FrenelSchlick(HoV,F0);
-				float k_dir = roughness/2;
+				float k_dir = pow(roughness*roughness+1,2)/8;
 				float G = GeometrySmith(NoV, NoL, k_dir);
 				
 				float3 KS = F;
