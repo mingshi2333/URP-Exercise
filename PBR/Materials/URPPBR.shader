@@ -101,12 +101,13 @@ Shader "URP/URPPBR"
 				float perceptualRoughness = 1.0-(_Smoothness);//也就是线性值，给美术调的
 				float roughness = perceptualRoughness*perceptualRoughness;//寒霜做法，因为其实当粗糙度很大的时候，调值变化没有那么明显
 				float Metallic = _Metallic;
+				roughness = lerp(0.002,1,roughness);
 				float3 F0 = float3(0.04,0.04,0.04);
 				 F0 = lerp(F0,_Tint.xyz,Metallic);
 
 				float D = DistributionGGX(NoH,roughness);
 				float3 F = F_FrenelSchlick(HoV,F0);
-				float k_dir = roughness/2;
+				float k_dir = pow(roughness*roughness+1,2)/8;
 				float G = GeometrySmith(NoV, NoL, k_dir);
 				
 				float3 KS = F;
@@ -123,6 +124,7 @@ Shader "URP/URPPBR"
 				
                 //间接光部分
 				float3 R = normalize(reflect(-V,N));
+				
 				float k_indir = roughness*roughness/2;
 				//【special】
 				float3 F_Indir = IndirFresnelSchlick(NoV,F0,roughness);
