@@ -1,10 +1,10 @@
 # URP-Exercise
 
-some URP shader and postprocess test.
-##PBR  
+some URP shader and postprocess test.  
+## PBR   
 base pbr  
 ClearCoat  
-##PostProcessing  
+## PostProcessing  
 - [x] Bloom  
 - [x] Gauussian Blur  
 - [x] KawaseBlur  
