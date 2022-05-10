@@ -5,9 +5,9 @@ some URP shader and postprocess test.
 base pbr  
 ClearCoat  
 ##PostProcessing  
-[x] Bloom  
-[x] Gauussian Blur  
-[x] KawaseBlur  
-[x] DualKawaseBlur  
-[x] SSAO(looks no good)  
-[] HBAO  
+- [x] Bloom  
+- [x] Gauussian Blur  
+- [x] KawaseBlur  
+- [x] DualKawaseBlur  
+- [x] SSAO(looks no good)  
+- [] HBAO  
